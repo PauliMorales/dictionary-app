@@ -161,8 +161,8 @@ const InfoContent = () => {
 
       {objectHasKeys(notFound) && (
         <div className="mt-16 text-center">
-          <h1 className="text-5xl">{notFound?.title ?? ""}</h1>
-          <p className="text-xl mt-4">{`${notFound?.message ?? ""} ${
+          <h1 className="text-5xl text-gray-800 dark:text-gray-400">{notFound?.title ?? ""}</h1>
+          <p className="text-xl mt-4 dark:text-gray-300">{`${notFound?.message ?? ""} ${
             notFound?.resolution
           }`}</p>
           <Image
