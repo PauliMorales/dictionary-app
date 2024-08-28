@@ -1,5 +1,7 @@
-const MeaningList = (props: any) => {
-  const { partOfSpeech, meaningsList, synonyms } = props;
+import { DefinitionType, MeaningType } from "../../types";
+
+const MeaningList = (props: MeaningType) => {
+  const { partOfSpeech, definitions, synonyms } = props;
   return (
     <div className="mt-8 ">
       <div className="flex items-center gap-6">
@@ -11,7 +13,7 @@ const MeaningList = (props: any) => {
       <div className="mt-6">
         <p className="mb-3 text-gray-400">Meaning</p>
         <ul className="list-disc px-10 marker:text-fuchsia-600 dark:text-gray-100">
-          {meaningsList.map((item: any, index: number) => (
+          {definitions.map((item: DefinitionType, index: number) => (
             <li key={`meaning-list-${index}`} className="px-2">
               <span>{item?.definition ?? ""}</span>
               {item?.example && (

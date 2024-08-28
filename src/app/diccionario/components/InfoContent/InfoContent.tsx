@@ -6,18 +6,11 @@ import { wordsService } from "@/utils/services/dictionary.service";
 import PhoneticWord from "./components/PhoneticWord/PhoneticWord";
 import MeaningList from "./components/MeaningList/MeaningList";
 import emptySearchIcon from "@/assets/empty_search.svg";
-
-interface DefinitionType {
-  meanings: any[];
-  phonetic: string;
-  phoneticAudio: any[];
-  sourceUrls: string[];
-  word: string;
-}
+import { DefinitionType, MeaningType, NotFoundType } from "./types";
 
 const InfoContent = () => {
   const [error, setError] = useState<boolean>(false);
-  const [notFound, setNotFound] = useState<Partial<{}>>({});
+  const [notFound, setNotFound] = useState<Partial<NotFoundType>>({});
   const [word, setWord] = useState<string>("");
   const [definition, setDefinition] = useState<Partial<DefinitionType>>({});
 
@@ -25,7 +18,7 @@ const InfoContent = () => {
     try {
       const response = await wordsService(word);
       if (response && response.length > 0) {
-        const mapResponse = response.map((item: any) => ({
+        const mapResponse = response.map((item: DefinitionType) => ({
           meanings: item.meanings,
           phonetic: item.phonetic,
           phoneticAudio: item.phonetics,
@@ -55,8 +48,8 @@ const InfoContent = () => {
             error ? "border-red-500" : ""
           }`}
           placeholder="Write the word you want to search"
-          onKeyDown={(event: any) => {
-            const value = event?.target?.value;
+          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+            const value = event?.currentTarget?.value ?? "";
             if (event.key === "Enter") {
               if (!!value) {
                 getWordInformation();
@@ -117,15 +110,15 @@ const InfoContent = () => {
       {objectHasKeys(definition) && (
         <>
           <PhoneticWord
-            phoneticAudio={definition?.phoneticAudio ?? null}
+            phoneticAudio={definition?.phoneticAudio ?? []}
             phonetic={definition?.phonetic ?? ""}
             title={definition?.word ?? ""}
           />
-          {definition?.meanings?.map((item: any, index: number) => (
+          {definition?.meanings?.map((item: MeaningType, index: number) => (
             <MeaningList
               key={`meanings-${index}`}
               partOfSpeech={item?.partOfSpeech ?? ""}
-              meaningsList={item?.definitions ?? []}
+              definitions={item?.definitions ?? []}
               synonyms={item?.synonyms ?? []}
             />
           ))}

@@ -1,17 +1,28 @@
 "use client";
 
 import { useRef } from "react";
+import { PhoneticAudioType } from "../../types";
 
-const PhoneticWord = (props: any) => {
+interface PhoneticWordPropsType {
+  phonetic: string;
+  phoneticAudio: PhoneticAudioType[];
+  title: string;
+}
+
+const PhoneticWord = (props: PhoneticWordPropsType) => {
   const { phonetic, phoneticAudio, title } = props;
-  const audioRef = useRef<any>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   function getAudio() {
+    /* SE FILTRA PRIMERO POR LOS ARCHIVOS DE AUDIO QUE SEAN DE ESTADOS UNIDOS BUSCANDO LA CADENA us.mp3.
+    SI NO SE ENCUENTRAN AUDIOS CON ESTA COINCIDENCIA SE BUSCAN AUDIOS QUE NO SEAN STRINGS VACIOS.
+    SI NINGÚN OBJETO TIENE UN AUDIO VÁLIDO SE PASA UN STRING VACÍO POR DEFECTO. */
     return phoneticAudio
       ? phoneticAudio.find(
-          (item: any) => item.audio && item.audio.indexOf("us.mp3") > 0
+          (item: PhoneticAudioType) =>
+            item.audio && item.audio.indexOf("us.mp3") > 0
         )?.audio ??
-          phoneticAudio.find((item: any) => item.audio)?.audio ??
+          phoneticAudio.find((item: PhoneticAudioType) => item.audio)?.audio ??
           ""
       : "";
   }
@@ -20,16 +31,19 @@ const PhoneticWord = (props: any) => {
     <div className="flex justify-between items-center mt-8 flex-wrap cursor-pointer ">
       <div>
         <h1 className="text-6xl break-all dark:text-gray-300">{title}</h1>
-        <p className="text-xl text-fuchsia-700 mt-2 dark:text-fuchsia-300 tracking-wide" >{phonetic}</p>
+        <p className="text-xl text-fuchsia-700 mt-2 dark:text-fuchsia-300 tracking-wide">
+          {phonetic}
+        </p>
       </div>
 
       {!!getAudio() && (
         <>
           <audio src={getAudio()} ref={audioRef} />
-          <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:duration-300"
+          <button
+            className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:duration-300"
             type="button"
             onClick={() => {
-              if (audioRef) {
+              if (audioRef?.current) {
                 audioRef.current.play();
               }
             }}
