@@ -6,6 +6,7 @@ import { wordsService } from "@/utils/services/dictionary.service";
 import PhoneticWord from "./components/PhoneticWord/PhoneticWord";
 import MeaningList from "./components/MeaningList/MeaningList";
 import emptySearchIcon from "@/assets/empty_search.svg";
+import initialSearchIcon from "@/assets/initial_search.png";
 import { DefinitionType, MeaningType, NotFoundType } from "./types";
 
 const InfoContent = () => {
@@ -107,6 +108,13 @@ const InfoContent = () => {
         </button>
       </div>
 
+      {!error && !objectHasKeys(definition) && (
+        <div className="mx-auto mt-12 w-full max-w-[500px]">
+          <h2 className="text-center text-5xl text-violet-800 dark:text-gray-300">Search any word</h2>
+          <Image src={initialSearchIcon} alt="Search icon for app init" />
+        </div>
+      )}
+
       {objectHasKeys(definition) && (
         <>
           <PhoneticWord
@@ -161,10 +169,12 @@ const InfoContent = () => {
 
       {objectHasKeys(notFound) && (
         <div className="mt-16 text-center">
-          <h1 className="text-5xl text-gray-800 dark:text-gray-400">{notFound?.title ?? ""}</h1>
-          <p className="text-xl mt-4 dark:text-gray-300">{`${notFound?.message ?? ""} ${
-            notFound?.resolution
-          }`}</p>
+          <h1 className="text-5xl text-gray-800 dark:text-gray-400">
+            {notFound?.title ?? ""}
+          </h1>
+          <p className="text-xl mt-4 dark:text-gray-300">{`${
+            notFound?.message ?? ""
+          } ${notFound?.resolution}`}</p>
           <Image
             className="m-auto"
             src={emptySearchIcon}
