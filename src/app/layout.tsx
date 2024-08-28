@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="font-serif">
-      <body className="min-h-[90vh] dark:bg-slate-600">{children}</body>
+      <body className="min-h-[80vh] dark:bg-slate-600">{children}</body>
     </html>
   );
 }
