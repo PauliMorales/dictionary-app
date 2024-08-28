@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Diccionario de palabras",
-  description: "Diccionario que permite buscar cualquier palabra",
+  title: "Dictionary",
+  description: "Dictionary where we can search words in english",
 };
 
 export default function RootLayout({

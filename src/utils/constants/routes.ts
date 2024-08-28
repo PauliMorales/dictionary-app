@@ -1,6 +1,6 @@
 const ROUTES = {
   root: "/",
-  dictionary: "/diccionario",
+  dictionary: "/dictionary",
 };
 
 export { ROUTES };
