@@ -28,7 +28,7 @@ const PhoneticWord = (props: PhoneticWordPropsType) => {
   }
 
   return (
-    <div className="flex justify-between items-center mt-8 flex-wrap cursor-pointer ">
+    <div className="flex justify-between items-center mt-8 flex-wrap">
       <div>
         <h1 className="text-6xl break-all dark:text-gray-300">{title}</h1>
         <p className="text-xl text-fuchsia-700 mt-2 dark:text-fuchsia-300 tracking-wide">
@@ -40,7 +40,7 @@ const PhoneticWord = (props: PhoneticWordPropsType) => {
         <>
           <audio src={getAudio()} ref={audioRef} />
           <button
-            className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:duration-300"
+            className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:duration-300 cursor-pointer"
             type="button"
             onClick={() => {
               if (audioRef?.current) {

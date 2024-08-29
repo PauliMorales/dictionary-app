@@ -138,15 +138,15 @@ const InfoContent = () => {
               {(definition?.sourceUrls ?? []).map(
                 (item: string) =>
                   item && (
-                    <div key={item} className="flex gap-2 items-center text-sm">
-                      <a
-                        className="underline break-all transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 hover:duration-300 dark:text-gray-200"
-                        href={item}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {item}
-                      </a>
+                    <a
+                      key={item}
+                      className="flex gap-1 items-center text-sm mb-1 underline break-all transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 hover:duration-300 dark:text-gray-200"
+                      href={item}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      
+                      <span>{item}</span>
                       <svg
                         className="h-5 w-5 text-gray-500"
                         width="24"
@@ -163,7 +163,7 @@ const InfoContent = () => {
                         <line x1="10" y1="14" x2="20" y2="4" />{" "}
                         <polyline points="15 4 20 4 20 9" />
                       </svg>
-                    </div>
+                    </a>
                   )
               )}
             </div>
