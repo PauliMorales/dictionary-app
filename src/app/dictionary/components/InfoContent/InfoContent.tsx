@@ -8,6 +8,7 @@ import MeaningList from "./components/MeaningList/MeaningList";
 import emptySearchIcon from "@/assets/empty_search.svg";
 import initialSearchIcon from "@/assets/initial_search.png";
 import { DefinitionType, MeaningType, NotFoundType } from "./types";
+import SearchInput from "./components/SearchInput/SearchInput";
 
 const InfoContent = () => {
   const [error, setError] = useState<boolean>(false);
@@ -41,77 +42,30 @@ const InfoContent = () => {
     return Object.keys(object).length > 0;
   }
 
+  function handlerWordSearch(value: string) {
+    if (!!value) {
+      getWordInformation();
+      setError(false);
+    } else {
+      setError(true);
+      setDefinition({});
+      setNotFound({});
+    }
+  }
+
   return (
     <div className="w-full min-w-[200px] relative mt-4 mb-8">
-      <div className="relative">
-        <input
-          className={`w-full pr-11 h-10 pl-3 py-2 bg-gray-200 placeholder:text-slate-400 text-slate-700 text-sm border rounded-xl transition duration-300 ease focus:outline-none shadow-sm focus:shadow-md ${
-            error ? "border-red-500" : ""
-          }`}
-          placeholder="Write the word you want to search"
-          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
-            const value = event?.currentTarget?.value ?? "";
-            if (event.key === "Enter") {
-              if (!!value) {
-                getWordInformation();
-                setError(false);
-              } else {
-                setError(true);
-                setDefinition({});
-                setNotFound({});
-              }
-            }
-            return value;
-          }}
-          onChange={(event) => {
-            setWord(event.target.value);
-          }}
-          value={word}
-        />
-        {error && (
-          <p className="text-xs text-red-500 flex items-center mt-2">
-            <svg
-              className="h-4 w-4 text-red-500 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="15" y1="9" x2="9" y2="15" />
-              <line x1="9" y1="9" x2="15" y2="15" />
-            </svg>
-            This field can´t be empty
-          </p>
-        )}
+      <SearchInput
+        error={error}
+        handlerWordSearch={handlerWordSearch}
+        word={word}
+        setWord={setWord}
+      />
 
-        <button
-          className="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center rounded"
-          type="button"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="#9061f9"
-            className="w-8 h-8"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
-        </button>
-      </div>
-
-      {!error && !objectHasKeys(definition) && (
+      {!error && !objectHasKeys(definition) && !objectHasKeys(notFound) && (
         <div className="mx-auto mt-12 w-full max-w-[500px]">
           <h2 className="text-center text-5xl text-violet-800 dark:text-gray-300">
-            Search any word
+            Search any word in english ☺
           </h2>
           <Image src={initialSearchIcon} alt="Search icon for app init" />
         </div>
@@ -145,7 +99,6 @@ const InfoContent = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      
                       <span>{item}</span>
                       <svg
                         className="h-5 w-5 text-gray-500"
